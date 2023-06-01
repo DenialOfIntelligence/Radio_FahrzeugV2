@@ -5,7 +5,8 @@
 
 #include <SPI.h>
 #include <RF24.h>
-
+//TODO Füge alle möglichen bewegungen hinzu
+//TODO Mache es möglich Motoren geschwindigkeit mit analog zu kontolieren
 RF24 radio(7, 8); // (CE, CSN)
 
 const byte address[6] = "1RF24";
