@@ -1,6 +1,6 @@
 #include <SPI.h>
 #include <RF24.h>
-
+//TODO Sende analoge daten für joystick
 RF24 radio(9, 10); // (CE, CSN)
 char text[0]="";
 const byte address[6] = "1RF24";
