@@ -26,16 +26,17 @@ void setup() {
   pinMode(A3, OUTPUT);
   pinMode(A4, OUTPUT);
   pinMode(A5, OUTPUT);
+
 }
 
 void loop() {
-
+  struct dataStruct {
+    int Xposition;
+    int Yposition;
+} myData;
   if (radio.available()) {
-    Serial.println("aaa");
-    char text[2] = {0};
-    radio.read(&text, sizeof(text) - 1);
-    String code = String(text); // Array -> Zeichen ("code")
-    if (code == "w") {
+    radio.read( &myData, sizeof(myData) );
+    if (myData.Yposition >= 500) {
       digitalWrite(3, 1);
       digitalWrite(2, 0);
       digitalWrite(4, 0);
@@ -46,7 +47,7 @@ void loop() {
       digitalWrite(A5, 1);
     }
 
-    if (code == "s") {
+    if (myData.Yposition <= 100) {
       digitalWrite(2, 1);
       digitalWrite(3, 0);
       digitalWrite(5, 0);
@@ -56,27 +57,9 @@ void loop() {
       digitalWrite(A5, 0);
       digitalWrite(A4, 1);
     }
-
-    Serial.println(code);
-
-    if (code == "d") {
-      digitalWrite(2, 0);
-      digitalWrite(3, 1);
-      digitalWrite(4, 0);
-      digitalWrite(5, 1);
-    }
-
-    if (code == "a") {
-      digitalWrite(2, 1);
-      digitalWrite(3, 0);
-      digitalWrite(4, 1);
-      digitalWrite(5, 0);
-    }
-  }
-
   else {
     delay(30);
-    if (!radio.available()) {
+    if (myData.Yposition>100 && myData.Y-position<500) {
       digitalWrite(2, 0);
       digitalWrite(3, 0);
       digitalWrite(4, 0);
@@ -88,4 +71,5 @@ void loop() {
     }
   }
   delay(10);
+}
 }

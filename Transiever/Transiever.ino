@@ -2,7 +2,6 @@
 #include <RF24.h>
 //TODO Sende analoge daten für joystick
 RF24 radio(9, 10); // (CE, CSN)
-char text[0]="";
 const byte address[6] = "1RF24";
 
 void setup() {
@@ -12,32 +11,19 @@ void setup() {
   radio.openWritingPipe(address);
   radio.stopListening();
   // Serial.begin(9600);
+
 }
 
 void loop() {
   //  Serial.println(radio.isChipConnected());
+  struct dataStruct {
+    int Xposition;
+    int Yposition;
 
-  if (analogRead(1)>500){
-    char text[]="w";
-    radio.write(&text, sizeof(text));
-  }
-
-  if (analogRead(1)<100){
-    char text[]="s";
-    radio.write(&text, sizeof(text));
-  }
-
-  else{
-  if(analogRead(0)>500){
-    char text[]="d";
-    radio.write(&text, sizeof(text));
-  }
-
-  if (analogRead(0)<100){
-    char text[]="a";
-    radio.write(&text, sizeof(text));
-  }
-
+} myData;
+  myData.Xposition = analogRead(0);
+  myData.Yposition = analogRead(1);
+  radio.write(&myData, sizeof(myData), 1);
   delay(10);
-  }
 }
+
