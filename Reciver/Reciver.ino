@@ -31,10 +31,10 @@ void setup() {
 void loop() {
 
   if (radio.available()) {
-    Serial.println("aaa");
     char text[2] = {0};
     radio.read(&text, sizeof(text) - 1);
-    String code = String(text); // Array -> Zeichen ("code")
+    String code = String(text);
+    Serial.println(code);
     if (code == "w") {
       digitalWrite(3, 1);
       digitalWrite(2, 0);
@@ -57,7 +57,7 @@ void loop() {
       digitalWrite(A4, 1);
     }
 
-    Serial.println(code);
+
 
     if (code == "d") {
       digitalWrite(2, 0);
