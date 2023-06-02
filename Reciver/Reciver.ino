@@ -10,7 +10,10 @@
 RF24 radio(7, 8); // (CE, CSN)
 
 const byte address[6] = "1RF24";
-
+struct dataStruct {
+    int Xposition;
+    int Yposition;
+} myData;
 void setup() {
   // Serial.begin(115200);
   radio.begin();
@@ -30,10 +33,7 @@ void setup() {
 }
 
 void loop() {
-  struct dataStruct {
-    int Xposition;
-    int Yposition;
-} myData;
+
   if (radio.available()) {
     radio.read( &myData, sizeof(myData) );
     if (myData.Yposition >= 500) {
@@ -59,7 +59,7 @@ void loop() {
     }
   else {
     delay(30);
-    if (myData.Yposition>100 && myData.Y-position<500) {
+    if (myData.Yposition>100 && myData.Yposition<500) {
       digitalWrite(2, 0);
       digitalWrite(3, 0);
       digitalWrite(4, 0);
