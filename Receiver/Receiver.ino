@@ -36,7 +36,7 @@ void loop() {
 
   if (radio.available()) {
     radio.read( &myData, sizeof(myData) );
-    if (myData.Yposition >= 500) {
+    if (myData.Yposition >= 700) {
       digitalWrite(3, 1);
       digitalWrite(2, 0);
       digitalWrite(4, 0);
@@ -47,7 +47,7 @@ void loop() {
       digitalWrite(A5, 1);
     }
 
-    if (myData.Yposition <= 100) {
+    if (myData.Yposition <= 200) {
       digitalWrite(2, 1);
       digitalWrite(3, 0);
       digitalWrite(5, 0);
@@ -57,9 +57,30 @@ void loop() {
       digitalWrite(A5, 0);
       digitalWrite(A4, 1);
     }
+    if (myData.Xposition >= 700){
+      digitalWrite(3, 1);
+      digitalWrite(2, 0);
+      digitalWrite(4, 1);
+      digitalWrite(5, 0);
+      digitalWrite(A3, 1);
+      digitalWrite(A2, 0);
+      digitalWrite(A4, 1);
+      digitalWrite(A5, 0);
+    }
+    if (myData.Xposition <= 200){
+      digitalWrite(3, 0);
+      digitalWrite(2, 1);
+      digitalWrite(4, 0);
+      digitalWrite(5, 1);
+      digitalWrite(A3, 0);
+      digitalWrite(A2, 1);
+      digitalWrite(A4, 0);
+      digitalWrite(A5, 1);
+    }
+
   else {
     delay(30);
-    if (myData.Yposition>100 && myData.Yposition<500) {
+    if (myData.Yposition>200 && myData.Yposition<700) {
       digitalWrite(2, 0);
       digitalWrite(3, 0);
       digitalWrite(4, 0);
