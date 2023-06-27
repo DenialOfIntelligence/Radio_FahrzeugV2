@@ -10,9 +10,12 @@
 RF24 radio(7, 8); // (CE, CSN)
 
 const byte address[6] = "1RF24";
-
+struct dataStruct {
+    int Xposition;
+    int Yposition;
+} myData;
 void setup() {
-  // Serial.begin(115200);
+  Serial.begin(9600);
   radio.begin();
   radio.setPALevel(RF24_PA_MAX);
   radio.setChannel(125);
@@ -26,16 +29,19 @@ void setup() {
   pinMode(A3, OUTPUT);
   pinMode(A4, OUTPUT);
   pinMode(A5, OUTPUT);
+
 }
 
 void loop() {
 
   if (radio.available()) {
-    char text[2] = {0};
-    radio.read(&text, sizeof(text) - 1);
-    String code = String(text);
-    Serial.println(code);
-    if (code == "w") {
+    radio.read( &myData, sizeof(myData) );
+    Serial.print("Y Pos");
+    Serial.println(myData.Yposition);
+    Serial.print("X Pos");
+    Serial.println(myData.Xposition);
+    if (myData.Yposition >= 700) {
+>>>>>>> Structs
       digitalWrite(3, 1);
       digitalWrite(2, 0);
       digitalWrite(4, 0);
@@ -46,7 +52,7 @@ void loop() {
       digitalWrite(A5, 1);
     }
 
-    if (code == "s") {
+    if (myData.Yposition <= 200) {
       digitalWrite(2, 1);
       digitalWrite(3, 0);
       digitalWrite(5, 0);
@@ -56,27 +62,29 @@ void loop() {
       digitalWrite(A5, 0);
       digitalWrite(A4, 1);
     }
-
-
-
-    if (code == "d") {
-      digitalWrite(2, 0);
+    if (myData.Xposition >= 700){
+>>>>>>> Structs
       digitalWrite(3, 1);
-      digitalWrite(4, 0);
-      digitalWrite(5, 1);
-    }
-
-    if (code == "a") {
-      digitalWrite(2, 1);
-      digitalWrite(3, 0);
+      digitalWrite(2, 0);
       digitalWrite(4, 1);
       digitalWrite(5, 0);
+      digitalWrite(A3, 1);
+      digitalWrite(A2, 0);
+      digitalWrite(A4, 1);
+      digitalWrite(A5, 0);
     }
-  }
+    if (myData.Xposition <= 200){
+      digitalWrite(3, 0);
+      digitalWrite(2, 1);
+      digitalWrite(4, 0);
+      digitalWrite(5, 1);
+      digitalWrite(A3, 0);
+      digitalWrite(A2, 1);
+      digitalWrite(A4, 0);
+      digitalWrite(A5, 1);
+    }
 
-  else {
-    delay(30);
-    if (!radio.available()) {
+    if (myData.Yposition>200 && myData.Yposition<700 && myData.Xposition>200 && myData.Xposition<700) {
       digitalWrite(2, 0);
       digitalWrite(3, 0);
       digitalWrite(4, 0);
@@ -89,3 +97,4 @@ void loop() {
   }
   delay(10);
 }
+
