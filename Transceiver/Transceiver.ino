@@ -8,7 +8,7 @@ struct dataStruct {
     int Yposition;
 
 } myData;
->>>>>>> Structs
+
 void setup() {
   radio.begin();
   radio.setPALevel(RF24_PA_MAX);
@@ -17,7 +17,6 @@ void setup() {
   radio.stopListening();
   Serial.begin(9600);
 
->>>>>>> Structs
 }
 
 void loop() {
@@ -27,5 +26,4 @@ void loop() {
   myData.Yposition = analogRead(1);
   radio.write(&myData, sizeof(myData), 1);
   delay(10);
->>>>>>> Structs
 }

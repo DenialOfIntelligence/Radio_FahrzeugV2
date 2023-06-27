@@ -41,7 +41,7 @@ void loop() {
     Serial.print("X Pos");
     Serial.println(myData.Xposition);
     if (myData.Yposition >= 700) {
->>>>>>> Structs
+
       digitalWrite(3, 1);
       digitalWrite(2, 0);
       digitalWrite(4, 0);
@@ -63,7 +63,6 @@ void loop() {
       digitalWrite(A4, 1);
     }
     if (myData.Xposition >= 700){
->>>>>>> Structs
       digitalWrite(3, 1);
       digitalWrite(2, 0);
       digitalWrite(4, 1);
