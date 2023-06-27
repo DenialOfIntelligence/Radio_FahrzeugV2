@@ -14,7 +14,7 @@ void setup() {
   radio.setChannel(125);
   radio.openWritingPipe(address);
   radio.stopListening();
-  // Serial.begin(9600);
+  Serial.begin(9600);
 
 }
 
@@ -26,4 +26,3 @@ void loop() {
   radio.write(&myData, sizeof(myData), 1);
   delay(10);
 }
-

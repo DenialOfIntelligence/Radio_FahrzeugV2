@@ -15,7 +15,7 @@ struct dataStruct {
     int Yposition;
 } myData;
 void setup() {
-  // Serial.begin(115200);
+  Serial.begin(9600);
   radio.begin();
   radio.setPALevel(RF24_PA_MAX);
   radio.setChannel(125);
@@ -36,6 +36,10 @@ void loop() {
 
   if (radio.available()) {
     radio.read( &myData, sizeof(myData) );
+    Serial.print("Y Pos");
+    Serial.println(myData.Yposition);
+    Serial.print("X Pos");
+    Serial.println(myData.Xposition);
     if (myData.Yposition >= 700) {
       digitalWrite(3, 1);
       digitalWrite(2, 0);
@@ -78,9 +82,7 @@ void loop() {
       digitalWrite(A5, 1);
     }
 
-  else {
-    delay(30);
-    if (myData.Yposition>200 && myData.Yposition<700) {
+    if (myData.Yposition>200 && myData.Yposition<700 && myData.Xposition>200 && myData.Xposition<700) {
       digitalWrite(2, 0);
       digitalWrite(3, 0);
       digitalWrite(4, 0);
@@ -93,4 +95,4 @@ void loop() {
   }
   delay(10);
 }
-}
+
