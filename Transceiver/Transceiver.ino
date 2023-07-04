@@ -12,7 +12,7 @@ struct dataStruct {
 void setup() {
   radio.begin();
   radio.setPALevel(RF24_PA_MAX);
-  radio.setChannel(125);
+  radio.setChannel(50);
   radio.openWritingPipe(address);
   radio.stopListening();
   Serial.begin(9600);
