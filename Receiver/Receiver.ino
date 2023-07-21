@@ -34,17 +34,31 @@ void setup() {
   pinMode(A5, OUTPUT);
 
 }
-
+int pwm(int x) {
+  int out;
+  if (x < 512) { //Check if joystick is above, below, or at the middle and calculate the unmapped output
+    x = 512 - x;
+  }
+  if (x > 512) {
+    x = x - 512;
+  }
+  if (x == 512) {
+    x = 0;
+  }
+  out = map(x, 0, 1023, 100, 255); //Map the output to a PWM value
+  Serial.println(x);
+  return out; //Return the value
+}
 void loop() {
 
   if (radio.available()) {
     radio.read( &myData, sizeof(myData) );
-    Serial.print("Y Pos");
-    Serial.println(myData.Yposition);
-    Serial.print("X Pos");
-    Serial.println(myData.Xposition);
-    pwmy=255-(myData.Yposition/4);
-    pwmx=255-(myData.Xposition/4);
+    //Serial.print("Y Pos");
+    //Serial.println(myData.Yposition);
+    //Serial.print("X Pos");
+    //Serial.println(myData.Xposition);
+    pwmx=pwm(myData.Xposition);
+    pwmy=pwm(myData.Yposition);
     if (myData.Yposition >= 700) {
 
       digitalWrite(3, 1);
@@ -57,7 +71,7 @@ void loop() {
       digitalWrite(A5, 1);
 
       analogWrite(10,pwmy);
-      analogWrite(11,pwmx);
+      analogWrite(11,pwmy);
     }
 
     if (myData.Yposition <= 200) {
@@ -69,8 +83,9 @@ void loop() {
       digitalWrite(A3, 0);
       digitalWrite(A5, 0);
       digitalWrite(A4, 1);
-      analogWrite(10,pwmy);
-      analogWrite(11,pwmx);
+      //Serial.println(pwmy);
+      //analogWrite(10,pwmy);
+      //analogWrite(11,pwmy);
     }
     if (myData.Xposition >= 700){
       digitalWrite(3, 1);
@@ -81,7 +96,7 @@ void loop() {
       digitalWrite(A2, 0);
       digitalWrite(A4, 1);
       digitalWrite(A5, 0);
-      analogWrite(10,pwmy);
+      analogWrite(10,pwmx);
       analogWrite(11,pwmx);
     }
     if (myData.Xposition <= 200){
@@ -93,7 +108,7 @@ void loop() {
       digitalWrite(A2, 1);
       digitalWrite(A4, 0);
       digitalWrite(A5, 1);
-      analogWrite(10,pwmy);
+      analogWrite(10,pwmx);
       analogWrite(11,pwmx);
     }
 
